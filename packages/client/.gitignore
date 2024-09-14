@@ -1,8 +1,9 @@
+# Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
+
 # dependencies
 node_modules/
 
-# Packages
-build/
+# Expo
 .expo/
 dist/
 web-build/
@@ -19,7 +20,6 @@ web-build/
 .metro-health-check*
 
 # debug
-lerna-debug.log
 npm-debug.*
 yarn-debug.*
 yarn-error.*
@@ -29,12 +29,7 @@ yarn-error.*
 *.pem
 
 # local env files
-.env*
 .env*.local
-!.env.example
 
 # typescript
 *.tsbuildinfo
-
-expo-env.d.ts
-# @end expo-cli
