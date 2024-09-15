@@ -1,1 +1,3 @@
-export const sayHello = () => console.log('Hello from shared package!')
+export * as API_V1 from './api/v1/'
+export * as Models_V1 from './models/v1/'
+export * from './modules'

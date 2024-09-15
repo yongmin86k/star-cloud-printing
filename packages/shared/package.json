@@ -1,12 +1,16 @@
 {
   "name": "star-cloud-printing-shared",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "build/index.js",
   "license": "MIT",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "watch": "tsc -w"
   },
   "devDependencies": {
     "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "axios": "^1.7.7"
   }
 }
