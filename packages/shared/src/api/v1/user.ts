@@ -32,3 +32,5 @@ export const login = async (payload: ILoginRequest) => {
 
 export const logout = async (payload: IBaseUser) =>
   axios.post<void>(`${API_VERSION.V1}/logout`, payload)
+
+// TODO: forgotPassword, resetPassword
