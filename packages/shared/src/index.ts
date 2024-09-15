@@ -1,1 +1,1 @@
-export const sayHello = () => console.log('Hello from shared package!')
+export * as Models_V1 from './models/v1/'
