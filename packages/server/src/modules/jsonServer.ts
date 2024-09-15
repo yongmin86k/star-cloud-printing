@@ -1,7 +1,8 @@
 import { Application } from 'express'
 import jsonServer from 'json-server'
+import { schema } from '../schema'
 
 export type TAddCustomRoute = (
   server: Application,
-  router: ReturnType<typeof jsonServer.router>
+  router: jsonServer.JsonServerRouter<schema>
 ) => void

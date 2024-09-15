@@ -1,8 +1,10 @@
 import jsonServer from 'json-server'
 import { addAuthRoutesV1 } from './controllers/authController'
+import { API_VERSION } from 'star-cloud-printing-shared'
+import { schema } from './schema'
 
 const server = jsonServer.create()
-const router = jsonServer.router('db.json')
+const router = jsonServer.router<schema>('db.json')
 const middlewares = jsonServer.defaults()
 
 server.use(middlewares)
@@ -16,7 +18,7 @@ customRoutes.forEach((addCustomRoute) => {
 
 server.use(
   jsonServer.rewriter({
-    '/api/v1/:resource/*': '/$1',
+    [`${API_VERSION.V1}/:resource/*`]: '/$1',
   })
 )
 

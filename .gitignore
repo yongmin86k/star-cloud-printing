@@ -33,6 +33,9 @@ yarn-error.*
 .env*.local
 !.env.example
 
+# local db files
+db.json
+
 # typescript
 *.tsbuildinfo
 

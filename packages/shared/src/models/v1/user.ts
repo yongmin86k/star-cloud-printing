@@ -1,12 +1,24 @@
 export interface IBaseUser {
-  id: number
   userName: string
 }
 
-export interface ILoginUser extends IBaseUser {
+export interface ILoginRequest extends IBaseUser {
   password: string
 }
 
-export interface IRegisterUser extends ILoginUser {
+export interface ILoginResponse extends IBaseUser {
+  token: string
+}
+
+export interface IRegisterRequest extends ILoginRequest {
   email: string
+}
+
+export interface IConfirmCodeRequest extends IBaseUser {
+  confirmCode: number
+}
+
+export interface IUserResponse extends ILoginRequest {
+  id: number
+  isVerified: boolean
 }
