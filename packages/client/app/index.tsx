@@ -4,10 +4,10 @@ import { useCallback, useEffect } from 'react'
 import { THEME_MODE } from '../modules/themes/ThemeModels'
 import { useAppDispatch } from '../stores/hooks/rootHooks'
 import { setTheme } from '../stores/slices/themeSlice'
-import { setIsAppLoading, setToken } from '../stores/slices/appSlice'
+import { setIsAppLoading, setCredential } from '../stores/slices/appSlice'
 import Logger from '../modules/logger/Logger'
 import SecureStore, { SECURE_STORE_KEYS } from '../stores/secureStore'
-// import { useYToken } from "../hooks/generalHooks"
+import { useYCredential } from '../hooks/generalHooks'
 
 const convertSchemeToTheme = (scheme: ColorSchemeName) => {
   switch (scheme) {
@@ -20,7 +20,7 @@ const convertSchemeToTheme = (scheme: ColorSchemeName) => {
 }
 
 export default function Root() {
-  // const token = useYToken()
+  const credential = useYCredential()
   const router = useRouter()
   const colorScheme = Appearance.getColorScheme()
   const dispatch = useAppDispatch()
@@ -44,7 +44,7 @@ export default function Root() {
       const token = await SecureStore.getValueFor(SECURE_STORE_KEYS.TOKEN)
       Logger.write('info', 'Root:getToken:', { token })
 
-      dispatch(setToken(token || undefined))
+      dispatch(setCredential(credential))
 
       return token
     } catch (error) {

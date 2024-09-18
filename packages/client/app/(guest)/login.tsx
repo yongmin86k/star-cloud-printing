@@ -6,26 +6,20 @@ import {
   TextInput,
   View,
 } from 'react-native'
-import { Link, useFocusEffect } from 'expo-router'
-// import { Link, useFocusEffect, useRouter } from 'expo-router'
+import { Link, useFocusEffect, useRouter } from 'expo-router'
 import {
   KeyboardAwareScrollView,
   KeyboardToolbar,
   useReanimatedFocusedInput,
 } from 'react-native-keyboard-controller'
-// import { IoTPrintingApiV1 } from "local-iot-printing"
+import { API_V1 } from 'star-cloud-printing-shared'
 import Logo from '../../components/Logo'
 import YText from '../../components/YText'
 import YTextInput from '../../components/YTextInput'
 import YButton from '../../components/YButton'
 import { useYColors, useYParams } from '../../hooks/generalHooks'
 import { useAppDispatch } from '../../stores/hooks/rootHooks'
-import { setIsAppLoading } from '../../stores/slices/appSlice'
-// import {
-//   setIsAppLoading,
-//   setRefreshToken,
-//   setToken,
-// } from '../../stores/slices/appSlice'
+import { setIsAppLoading, setCredential } from '../../stores/slices/appSlice'
 import Logger from '../../modules/logger/Logger'
 import {
   PASSWORD_MIN_LENGTH,
@@ -36,7 +30,7 @@ export default function Login() {
   const diameter = 148
   const params = useYParams<'/login'>()
   const colors = useYColors()
-  // const router = useRouter()
+  const router = useRouter()
   const { input } = useReanimatedFocusedInput()
 
   const [userName, setUserName] = useState(params.userName)
@@ -90,19 +84,16 @@ export default function Login() {
         throw new Error('User name and password are required')
       }
 
-      // const auth = await IoTPrintingApiV1.login({
-      //   userName,
-      //   password,
-      // })
+      const credential = await API_V1.login({
+        userName,
+        password,
+      })
 
-      // const { IdToken, RefreshToken } = auth.data.AuthenticationResult || {}
+      dispatch(setCredential(credential))
 
-      // dispatch(setToken(IdToken))
-      // dispatch(setRefreshToken(RefreshToken))
-
-      // if (IdToken) {
-      //   router.replace("/")
-      // }
+      if (credential.token) {
+        router.replace('/')
+      }
     } catch (error) {
       Logger.write('error', error)
 

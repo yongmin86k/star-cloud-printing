@@ -12,11 +12,10 @@ import Animated, {
 } from 'react-native-reanimated'
 import YText from '../../components/YText'
 import YButton from '../../components/YButton'
-import { useFocusEffect } from 'expo-router'
-// import { useFocusEffect, useRouter } from "expo-router"
+import { useFocusEffect, useRouter } from 'expo-router'
+import { API_V1 } from 'star-cloud-printing-shared'
 import { useYColors, useYParams } from '../../hooks/generalHooks'
 import { CODE_LENGTH } from '../../modules/constants'
-// import { IoTPrintingApiV1 } from "local-iot-printing"
 import Logger from '../../modules/logger/Logger'
 import { useAppDispatch } from '../../stores/hooks/rootHooks'
 import { setIsAppLoading } from '../../stores/slices/appSlice'
@@ -25,7 +24,7 @@ export default function ConfirmEmail() {
   const [confirmCode, setConfirmCode] = useState<string>()
 
   const { email, userName } = useYParams<'/confirm-email'>()
-  // const router = useRouter()
+  const router = useRouter()
   const dispatch = useAppDispatch()
   const inputRef = useRef<TextInput>(null)
   const colors = useYColors()
@@ -51,23 +50,17 @@ export default function ConfirmEmail() {
         throw new Error('Invalid user.\nPlease restart the app and try again.')
       }
 
-      // const res = await IoTPrintingApiV1.confirmSignUp({
-      //   userName: userName,
-      //   code: confirmCode,
-      // })
+      await API_V1.confirmCode({
+        userName,
+        confirmCode,
+      })
 
-      // if (res.status < 400) {
-      //   return router.replace({
-      //     pathname: "/login",
-      //     params: {
-      //       userName,
-      //     },
-      //   })
-      // }
-
-      // Logger.write("error", res)
-
-      throw new Error('Something went wrong.\nPlease try again later.')
+      return router.replace({
+        pathname: '/login',
+        params: {
+          userName,
+        },
+      })
     } catch (error) {
       Logger.write('error', error)
 

@@ -1,36 +1,37 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { RootState } from "../rootStore"
-import Logger from "../../modules/logger/Logger"
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { RootState } from '../rootStore'
+import Logger from '../../modules/logger/Logger'
+import { Models_V1 } from 'star-cloud-printing-shared'
 
 export interface AppStore {
-  token?: string
+  credential?: Models_V1.ILoginResponse
   refreshToken?: string
   isAppLoading: boolean
   loadingMessage?: string
 }
 
 const initialState: AppStore = {
-  token: undefined,
   refreshToken: undefined,
   isAppLoading: false,
   loadingMessage: undefined,
 }
 
 export const appSlice = createSlice({
-  name: "app",
+  name: 'app',
   initialState,
   reducers: {
-    setToken: (state, action: PayloadAction<string | undefined>) => {
-      state.token = action.payload
+    setCredential: (
+      state,
+      action: PayloadAction<Models_V1.ILoginResponse | undefined>
+    ) => {
+      state.credential = action.payload
     },
-    setRefreshToken: (state, action: PayloadAction<string | undefined>) => {
-      state.refreshToken = action.payload
-    },
+
     setIsAppLoading: (
       state,
-      action: PayloadAction<{ isLoading: boolean; message?: string }>,
+      action: PayloadAction<{ isLoading: boolean; message?: string }>
     ) => {
-      Logger.write("info", "setIsAppLoading", action.payload)
+      Logger.write('info', 'setIsAppLoading', action.payload)
 
       state.isAppLoading = action.payload.isLoading
       state.loadingMessage = action.payload.message
@@ -38,14 +39,13 @@ export const appSlice = createSlice({
   },
 })
 
-export const { setToken, setRefreshToken, setIsAppLoading } = appSlice.actions
+export const { setCredential, setIsAppLoading } = appSlice.actions
 
 export const appSelectors = {
   isAppLoading: (state: RootState) => state.appStore.isAppLoading,
-  isSignedIn: (state: RootState) => Boolean(state.appStore.token),
+  isSignedIn: (state: RootState) => Boolean(state.appStore.credential?.token),
   loadingMessage: (state: RootState) => state.appStore.loadingMessage,
-  token: (state: RootState) => state.appStore.token,
-  refreshToken: (state: RootState) => state.appStore.refreshToken,
+  credential: (state: RootState) => state.appStore.credential,
 }
 
 export default appSlice.reducer

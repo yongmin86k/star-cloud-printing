@@ -11,5 +11,5 @@ export const useYColors = () => useAppSelector(selectColorScheme)
 export const useYLoader = () => useAppSelector(appSelectors.isAppLoading)
 export const useYLoadingMessage = () =>
   useAppSelector(appSelectors.loadingMessage)
-// export const useYToken = () => useAppSelector(appSelectors.token)
+export const useYCredential = () => useAppSelector(appSelectors.credential)
 export const useIsSignedIn = () => useAppSelector(appSelectors.isSignedIn)

@@ -1,8 +1,8 @@
-import { SafeAreaView, View } from "react-native"
-import YButton from "../../../components/YButton"
-import { useAppDispatch } from "../../../stores/hooks/rootHooks"
-import { setToken } from "../../../stores/slices/appSlice"
-import { useYColors } from "../../../hooks/generalHooks"
+import { SafeAreaView, View } from 'react-native'
+import YButton from '../../../components/YButton'
+import { useAppDispatch } from '../../../stores/hooks/rootHooks'
+import { setCredential } from '../../../stores/slices/appSlice'
+import { useYColors } from '../../../hooks/generalHooks'
 
 export default function Settings() {
   const colors = useYColors()
@@ -18,7 +18,7 @@ export default function Settings() {
               marginVertical: 32,
             },
             onPress: () => {
-              dispatch(setToken())
+              dispatch(setCredential())
             },
           }}
         />

@@ -6,13 +6,13 @@ import {
   TextInput,
   View,
 } from 'react-native'
-import { Link, useFocusEffect } from 'expo-router'
-// import { Link, useFocusEffect, useRouter } from "expo-router"
+import { Link, useFocusEffect, useRouter } from 'expo-router'
 import {
   KeyboardAwareScrollView,
   KeyboardToolbar,
   useReanimatedFocusedInput,
 } from 'react-native-keyboard-controller'
+import { API_V1 } from 'star-cloud-printing-shared'
 import YText from '../../components/YText'
 import YTextInput from '../../components/YTextInput'
 import YButton from '../../components/YButton'
@@ -28,7 +28,7 @@ import Logger from '../../modules/logger/Logger'
 export default function Signup() {
   const dispatch = useAppDispatch()
   const colors = useYColors()
-  // const router = useRouter()
+  const router = useRouter()
   const params = useYParams<'/signup'>()
   const { input } = useReanimatedFocusedInput()
 
@@ -81,23 +81,23 @@ export default function Signup() {
         throw new Error('Please fill in all fields.')
       }
 
-      // const res = await IoTPrintingApiV1.signUp({
-      //   email,
-      //   password,
-      //   userName,
-      // })
+      const res = await API_V1.register({
+        email,
+        userName,
+        password,
+      })
 
-      // if (res.status < 400) {
-      //   return router.push({
-      //     pathname: "/confirm-email",
-      //     params: {
-      //       email,
-      //       userName,
-      //     },
-      //   })
-      // }
+      if (!res.isVerified) {
+        return router.push({
+          pathname: '/confirm-email',
+          params: {
+            email,
+            userName,
+          },
+        })
+      }
 
-      // Logger.write("error", res)
+      Logger.write('error', res)
 
       throw new Error('Something went wrong.\nPlease try again later.')
     } catch (error) {
