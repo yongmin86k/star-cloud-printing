@@ -86,7 +86,7 @@ export const addAuthRoutesV1: TAddCustomRoute = (server, router) => {
       )
 
       if (isLoggedInToken) {
-        return res.status(201).send(isLoggedInToken)
+        return res.status(202).send(isLoggedInToken)
       }
 
       // Mocking the user token
