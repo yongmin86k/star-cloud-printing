@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { RootState } from "../rootStore"
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { RootState } from '../rootStore'
 
 export interface CloudPrinter {
   mac: string
@@ -14,15 +14,15 @@ export interface CloudPrinter {
 }
 
 export interface PrinterStore {
-  printers: Map<string, CloudPrinter>
+  printers: Record<string, CloudPrinter>
 }
 
 const initialState: PrinterStore = {
-  printers: new Map<string, CloudPrinter>(),
+  printers: {},
 }
 
 export const printerSlice = createSlice({
-  name: "printer",
+  name: 'printer',
   initialState,
   reducers: {
     setPrinter: (state, action: PayloadAction<CloudPrinter | undefined>) => {
@@ -30,7 +30,7 @@ export const printerSlice = createSlice({
         return
       }
 
-      state.printers.set(action.payload.mac, action.payload)
+      state.printers[action.payload.mac] = action.payload
     },
   },
 })
@@ -38,7 +38,9 @@ export const printerSlice = createSlice({
 export const { setPrinter } = printerSlice.actions
 
 export const printerSelectors = {
-  printers: (state: RootState) => [...state.printerStore.printers.values()],
+  printers: (state: RootState) => [
+    ...Object.values(state.printerStore.printers),
+  ],
 }
 
 export default printerSlice.reducer
