@@ -27,4 +27,5 @@ export interface IBasePrinter {
   clientAction?: null // ref: https://star-m.jp/products/s_print/sdk/StarCloudPRNT/manual/en/protocol-reference/http-method-reference/server-polling-post/client-action.html#server-polling-client-action
   display: IBaseDisplay[]
   barcodeReader: IBaseBarcodeReader[]
+  lastConnected: string
 }

@@ -1,5 +1,6 @@
 import jsonServer from 'json-server'
 import { addAuthRoutesV1 } from './controllers/authControllerV1'
+import { addPrinterRoutesV1 } from './controllers/printerControllerV1'
 import { API_VERSION } from 'star-cloud-printing-shared'
 import { schema } from './schema'
 
@@ -11,7 +12,7 @@ server.use(middlewares)
 
 server.use(jsonServer.bodyParser)
 
-const customRoutes = [addAuthRoutesV1]
+const customRoutes = [addAuthRoutesV1, addPrinterRoutesV1]
 customRoutes.forEach((addCustomRoute) => {
   addCustomRoute(server, router)
 })
