@@ -7,6 +7,7 @@ export interface ILoginRequest extends IBaseUser {
 }
 
 export interface ILoginResponse extends IBaseUser {
+  id: number
   token: string
 }
 
@@ -15,7 +16,7 @@ export interface IRegisterRequest extends ILoginRequest {
 }
 
 export interface IConfirmCodeRequest extends IBaseUser {
-  confirmCode: number
+  confirmCode: string
 }
 
 export interface IUserResponse extends ILoginRequest {

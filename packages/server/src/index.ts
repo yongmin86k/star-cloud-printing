@@ -1,5 +1,5 @@
 import jsonServer from 'json-server'
-import { addAuthRoutesV1 } from './controllers/authController'
+import { addAuthRoutesV1 } from './controllers/authControllerV1'
 import { API_VERSION } from 'star-cloud-printing-shared'
 import { schema } from './schema'
 
