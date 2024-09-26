@@ -4,7 +4,7 @@ import { TAddCustomRoute } from '../modules/jsonServer'
 
 export const addPrinterRoutesV1: TAddCustomRoute = (server, router) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const testRouter = router as unknown as {
+  const customRouter = router as unknown as {
     render: (request: ExpressRequest, response: ExpressRespons) => void
   }
   const printers = router.db.get('printers').value()
@@ -15,8 +15,13 @@ export const addPrinterRoutesV1: TAddCustomRoute = (server, router) => {
       req.method === 'POST' &&
       req.url.includes(`${API_VERSION.V1}/printers`)
     ) {
-      const { body, query } = req
+      const { body, headers, query } = req
+      const [serverVersion, printerVersion] = headers['user-agent']?.split(
+        ' '
+      ) || [undefined, undefined]
 
+      body.serverVersion = serverVersion
+      body.printerVersion = printerVersion
       body.lastConnected = query.t
 
       const existingPrinter = printers.find(
@@ -24,7 +29,7 @@ export const addPrinterRoutesV1: TAddCustomRoute = (server, router) => {
       )
 
       if (existingPrinter) {
-        req.method = 'PATCH'
+        req.method = 'PUT'
         req.url = `/printers/${existingPrinter.id}`
       }
     }
@@ -32,15 +37,19 @@ export const addPrinterRoutesV1: TAddCustomRoute = (server, router) => {
     next()
   })
 
-  testRouter.render = (req, res) => {
+  customRouter.render = (req, res) => {
     const { method, originalUrl } = req
 
     if (
-      (method === 'PATCH' || method === 'POST') &&
+      (method === 'PUT' || method === 'POST') &&
       originalUrl.includes(`${API_VERSION.V1}/printers`)
     ) {
       res.jsonp({
         jobReady: false,
+        // clientAction: [
+        //   { request: 'SetID', options: '' },
+        //   { request: 'ClientVersion', options: '' },
+        // ],
       })
     }
   }

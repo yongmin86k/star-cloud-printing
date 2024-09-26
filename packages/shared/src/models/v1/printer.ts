@@ -18,8 +18,9 @@ interface IBaseBarcodeReader {
 export interface IBasePrinter {
   id: number
   status: string
-  // apiId: string
   printerMAC: string
+  serverVersion: string
+  printerVersion: string
   uniqueID?: string
   jobToken?: string
   statusCode: string
